@@ -1,0 +1,8 @@
+import { sqliteTable, text, real, integer } from 'drizzle-orm/sqlite-core';
+export const categories = sqliteTable('categories', { id: integer('id').primaryKey({autoIncrement:true}), name:text('name').notNull(), type:text('type').notNull() });
+export const transactions = sqliteTable('transactions', { id:integer('id').primaryKey({autoIncrement:true}), title:text('title').notNull(), amount:real('amount').notNull(), type:text('type').notNull(), category:text('category').notNull(), date:text('date').notNull(), description:text('description').notNull().default('') });
+export const budgets = sqliteTable('budgets', { id:integer('id').primaryKey({autoIncrement:true}), category:text('category').notNull(), month:text('month').notNull(), amount:real('amount').notNull() });
+export const goals = sqliteTable('savings_goals', { id:integer('id').primaryKey({autoIncrement:true}), name:text('name').notNull(), target:real('target').notNull(), date:text('date').notNull(), icon:text('icon').notNull().default('✨'), color:text('color').notNull().default('#DCEBDD') });
+export const contributions = sqliteTable('savings_contributions', { id:integer('id').primaryKey({autoIncrement:true}), goalId:integer('goal_id').notNull().references(()=>goals.id), amount:real('amount').notNull(), date:text('date').notNull() });
+export const messages = sqliteTable('ai_messages', { id:integer('id').primaryKey({autoIncrement:true}), role:text('role').notNull(), content:text('content').notNull(), date:text('date').notNull() });
+export const settings = sqliteTable('settings', { key:text('key').primaryKey(), value:text('value').notNull() });
